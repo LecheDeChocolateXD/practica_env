@@ -1,0 +1,74 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginxserver
+    image: nginx
+    ports:
+     - "80:80"
+     - "8080:8080"
+     - "443:443"
+    volumes:
+     - ./nginx
+    restart: unless-stopped
+    networks:
+      - env_net
+  galeraserver:
+    container_name: galeraserver
+    image: galera
+    ports:
+     - "3306:3306"
+     - "4444:4444"
+     - "4567:4567"
+     - "4568:4568"
+    volumes:
+     - ./galeraserver
+    restart: unless-stopped
+    networks:
+      - env_net
+  galeraclient1:
+    container_name: galeraclient1
+    image: galera
+    ports:
+     - "3306:4306"
+     - "4444:5555"
+     - "4567:5567"
+     - "4568:5568"
+    volumes:
+     - ./galeraclient1
+    restart: unless-stopped
+    networks:
+      - env_net
+  galeraclient2:
+    container_name: galeraclient2
+    image: galera
+    ports:
+     - "3306:6306"
+     - "4444:6666"
+     - "4567:6567"
+     - "4568:6568"
+    volumes:
+     - ./galeraclient2
+    restart: unless-stopped
+    networks:
+      - env_net
+  DNS:
+    container_name: DNS
+    image: bind9dns
+    volumes:
+     - ./bind9dns
+    restart: unless-stopped
+    networks:
+      - env_net
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - "9443:9443"
+    volumes:
+        - data:/data
+        - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    networks:
+      - env_net
+networks:
+  env_net:
+    external: true

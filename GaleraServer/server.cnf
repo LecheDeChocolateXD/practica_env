@@ -16,16 +16,20 @@
 #
 [galera]
 # Mandatory settings
-#wsrep_on=ON
-#wsrep_provider=
-#wsrep_cluster_address=
-#binlog_format=row
-#default_storage_engine=InnoDB
-#innodb_autoinc_lock_mode=2
+wsrep_on=ON
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+wsrep_cluster_address="gcomm://165.232.158.171,143.110.146.214,159.203.65.221" //DireccionesIP Nodo1=165.232.158.171  Nodo2=143.110.146.214 Nodo3=159.203.65.221
+binlog_format=row
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2
 #
 # Allow server to accept connections on all interfaces.
 #
-#bind-address=0.0.0.0
+bind-address=0.0.0.0
+wsrep_cluster_name="Cluster MariaDB"
+wsrep_node_address="165.232.158.171" //Cambiar por IP
+wsrep_node_name="galeradb1" //cambiar nombre
+wsrep_sst_method=rsync
 #
 # Optional setting
 #wsrep_slave_threads=1
